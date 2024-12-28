@@ -4,14 +4,7 @@
 
 ### Prerequisites
 
-To build **mlkem-native**, you need `make` and a C90 compiler. To use the test scripts, you need Python3 with
-dependencies as specified in [requirements.txt](requirements.txt). We recommend using a virtual environment, e.g.:
-
-```bash
-python3 -m venv venv
-./venv/bin/python3 -m pip install -r requirements.txt
-source venv/bin/activate
-```
+To build **mlkem-native**, you need `make` and a C90 compiler. To use the test scripts, you need Python3 (>= 3.7).
 
 ### Using `make`
 
@@ -46,16 +39,6 @@ example,
 will compile and run functionality tests. For detailed information on how to use the script, please refer to the
 `--help` option.
 
-### Nix setup
-
-All the development and build dependencies are also specified in [flake.nix](flake.nix). We recommend installing them
-using
-[nix](https://nixos.org/download/). To execute a bash shell with the development environment specified in
-[flake.nix](flake.nix), run
-```bash
-nix develop --experimental-features 'nix-command flakes'
-```
-
 ### Windows
 
 You can also build **mlkem-native** on Windows using `nmake` and an MSVC compiler.
@@ -64,3 +47,18 @@ To build and run the tests (only support functional testing for non-opt implemen
 ```powershell
 nmke /f .\Makefile.Microsoft_nmake quickcheck
 ```
+
+# Developing mlkem-native
+
+There are further scripts used for development of mlkem-native, such as `format`, `lint` and `autogenerate_files.py`, which have additional dependencies. You will also need CBMC if you make changes to the C code.
+
+### nix setup
+
+We specify the development environment for mlkem-native using nix. If you want to help develop mlkem-native, please setup nix using the [nix installer script](https://nixos.org/download/), not your package manager. 
+
+All the development and build dependencies are specified in [flake.nix](flake.nix). To execute a bash shell, run
+```bash
+nix develop --experimental-features 'nix-command flakes'
+```
+
+To confirm that everything worked, try `lint` or `tests cbmc`.
